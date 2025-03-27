@@ -1,26 +1,18 @@
 const express = require("express");
 const connectDB = require("./Config/db");
-const users = require("./models/users");
+const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.post("/signup", async (req, res) => {
-  const user = new users({
-    firstName: "Rohit",
-    lastName: "Sharma",
-    emailId: "rohit@sharma.com",
-    password: "rohit@123",
-  });
 
-  try {
-    await user.save();
-    res.send("User created successfully");
-  } catch (error) {
-    res.status(400).send("User not created", error);
-  }
-});
+app.use(express.json());
+app.use(cookieParser());
+
+const authRouter = require("./routes/auth");
+
+app.use("/", authRouter);
 
 connectDB()
   .then(() => {
