@@ -1,5 +1,14 @@
+// Importing the "validator" library for data validation
 const validator = require("validator");
 
+// Function: validateSignUpData
+// Description: Validates the data provided during user sign-up.
+// Parameters: req (Express request object containing the user data in req.body)
+// Validation:
+// - Ensures `firstName` and `lastName` are provided.
+// - Validates `emailId` using the `validator.isEmail` method.
+// - Ensures `password` meets strong password criteria using `validator.isStrongPassword`.
+// Throws: An error with a descriptive message if validation fails.
 const validateSignUpData = (req) => {
   const { firstName, lastName, emailId, password } = req.body;
   if (!firstName || !lastName) {
@@ -11,6 +20,14 @@ const validateSignUpData = (req) => {
   }
 };
 
+// Function: validateEditProfileData
+// Description: Validates the data provided during profile editing.
+// Parameters: req (Express request object containing the user data in req.body)
+// Validation:
+// - Ensures only allowed fields are being updated.
+// - Validates `skills` (if provided) to ensure it is an array with a maximum length of 10.
+// - (Optional) Validates `profilePic` (if provided) to ensure it is a valid URL (commented out for now).
+// Returns: `true` if all validations pass, otherwise `false`.
 const validateEditProfileData = (req) => {
   const allowedEditFields = [
     "firstName",
@@ -23,12 +40,13 @@ const validateEditProfileData = (req) => {
     "skills",
   ];
 
+  // Ensure all fields in the request body are allowed for editing
   const isEditAllowed = Object.keys(req.body).every((field) =>
     allowedEditFields.includes(field)
   );
   if (!isEditAllowed) return false;
 
-  // Validate profilePic (ensure it's a valid URL if provided)
+  // (Optional) Validate `profilePic` to ensure it is a valid URL (commented out for now)
   // if (req.body.profilePic) {
   //   const urlPattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp))$/i;
   //   if (!urlPattern.test(req.body.profilePic)) {
@@ -36,7 +54,7 @@ const validateEditProfileData = (req) => {
   //   }
   // }
 
-  // Validate skills (should be an array with a max length of 10)
+  // Validate `skills` to ensure it is an array with a maximum length of 10
   if (
     req.body.skills &&
     (!Array.isArray(req.body.skills) || req.body.skills.length > 10)
@@ -47,6 +65,7 @@ const validateEditProfileData = (req) => {
   return true;
 };
 
+// Exporting the validation functions for use in other parts of the application
 module.exports = {
   validateSignUpData,
   validateEditProfileData,
