@@ -3,12 +3,13 @@ const express = require("express");
 const connectDB = require("./Config/db"); // Database connection function
 const app = express();
 const cookieParser = require("cookie-parser"); // Middleware for parsing cookies
-
+const cors = require("cors"); // Middleware for enabling CORS
 // Load environment variables from .env file
 require("dotenv").config();
 const PORT = process.env.PORT || 7777; // Default port is 7777 if not specified in .env
 
 // Middleware for parsing JSON request bodies
+app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
 
 // Middleware for parsing cookies
