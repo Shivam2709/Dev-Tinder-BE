@@ -9,7 +9,12 @@ require("dotenv").config();
 const PORT = process.env.PORT || 7777; // Default port is 7777 if not specified in .env
 
 // Middleware for parsing JSON request bodies
-app.use(cors()); // Enable CORS for all routes
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.) to be sent
+  })
+); // Enable CORS for all routes
 app.use(express.json());
 
 // Middleware for parsing cookies
