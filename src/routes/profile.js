@@ -23,7 +23,9 @@ profileRouter.get("/profile/view", userAuth, async (req, res) => {
     const user = req.user; // Authenticated user object
 
     // Respond with the user data
-    res.send(user);
+    const { password, ...safeUser } = user.toObject();
+
+    res.send(safeUser);
   } catch (error) {
     // Handle errors and send a 400 status with the error message
     res.status(400).send("ERROR: " + error.message);
