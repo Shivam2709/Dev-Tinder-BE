@@ -1,6 +1,6 @@
 // Importing required modules
 const express = require("express");
-const connectDB = require("./Config/db"); // Database connection function
+const connectDB = require("./config/db"); // Database connection function
 const app = express();
 const cookieParser = require("cookie-parser"); // Middleware for parsing cookies
 const cors = require("cors"); // Middleware for enabling CORS
